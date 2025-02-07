@@ -1,7 +1,9 @@
 import hangman
 
 def main():
-   random_word = hangman.fetch_random_word()
+   print("--------Welcome to hangman game--------")
+   word_len = hangman.get_word_len()
+   random_word = hangman.fetch_random_word(word_len)
    hint = ["_"] * len(random_word)
    wrong_guess_count = 0
    guessed_letters = []

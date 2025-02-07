@@ -56,8 +56,8 @@ def check_win_condition(wrong_guess_count, hint):
    else:
       return "still_going"
 
-def fetch_random_word():
-   url = "https://random-word-api.vercel.app/api?words=1&length=5" 
+def fetch_random_word(word_len):
+   url = f"https://random-word-api.vercel.app/api?words=1&length={word_len}" 
    try:
       response = requests.get(url)
       response.raise_for_status()
@@ -69,3 +69,22 @@ def fetch_random_word():
    except requests.ConnectionError:
       print("Connection error, check your connection")
    exit()
+
+def get_word_len():
+   class WordLengthError(Exception):
+      pass
+
+   while True:
+      try:
+         word_len = int(input("Enter word length(3-9): "))
+         if word_len < 3 or word_len > 9:
+            raise WordLengthError
+      except ValueError:
+         print("invalid number, try again..")
+         continue
+      except WordLengthError:
+         print("word length out of range, try again..")
+         continue
+      else:
+         return word_len
+      
