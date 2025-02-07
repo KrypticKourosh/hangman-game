@@ -1,6 +1,4 @@
-from random import choice
-
-word_list = ["soda", "apple", "bed", "human", "ali"]
+import requests
 
 def display_art(wrong_guess_count):
    hangman_art = {0:("   ",
@@ -58,9 +56,22 @@ def check_win_condition(wrong_guess_count, hint):
    else:
       return "still_going"
 
+def fetch_random_word():
+   url = "https://random-word-api.vercel.app/api?words=1&length=5" 
+   try:
+      response = requests.get(url)
+      response.raise_for_status()
+      data = response.json() #list of single string
+      data = "".join(data) #turns list into string
+      return data
+   except requests.HTTPError as http_error:
+      print(f"HTTP error occurred: {http_error}")
+   except requests.ConnectionError:
+      print("Connection error, check your connection")
+   exit()
+
 def main():
-   # random_word = choice(word_list)
-   random_word = "apple"
+   random_word = fetch_random_word()
    hint = ["_"] * len(random_word)
    wrong_guess_count = 0
    guessed_letters = []
