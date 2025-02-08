@@ -10,6 +10,7 @@ def play_hangman(win_streak):
 
    is_running = True
    while is_running:
+      clear_console()
       display_art(wrong_guess_count)
       display_hint(hint)
 
@@ -147,3 +148,7 @@ def ask_play_again():
       else:
          print("Invalid input, try again..")
          continue
+
+def clear_console():
+   from os import system
+   system("cls")
