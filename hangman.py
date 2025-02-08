@@ -1,6 +1,6 @@
 import requests
 
-def play_hangman():
+def play_hangman(win_streak):
    print("--------Welcome to hangman game--------")
    word_len = get_word_len()
    random_word = fetch_random_word(word_len)
@@ -37,11 +37,15 @@ def play_hangman():
       flag = check_win_condition(wrong_guess_count, hint)
       if flag == "won":
          print(f"You won, total incorrect guesses: {wrong_guess_count}")
+         win_streak += 1
          is_running = False
       elif flag == "lost":
          display_art(6) #full hangman
          print(f"You lost, the word was: {random_word}")
+         win_streak = 0
          is_running = False
+
+   return win_streak
 
 def display_art(wrong_guess_count):
    hangman_art = {0:("   ",
