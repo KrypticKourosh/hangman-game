@@ -1,5 +1,6 @@
 import requests
 
+MAX_WRONG_ANSWERS = 9
 def play_hangman(win_streak):
    print("--------Welcome to hangman game--------")
    word_len = get_word_len()
@@ -41,7 +42,7 @@ def play_hangman(win_streak):
          win_streak += 1
          is_running = False
       elif flag == "lost":
-         display_art(6) #full hangman
+         display_art(MAX_WRONG_ANSWERS) #full hangman
          print(f"You lost, the word was: {random_word}")
          win_streak = 0
          is_running = False
@@ -49,27 +50,57 @@ def play_hangman(win_streak):
    return win_streak
 
 def display_art(wrong_guess_count):
-   hangman_art = {0:("   ",
-                     "   ",
-                     "   "),
-                  1:(" o ",
-                     "   ",
-                     "   "),
-                  2:(" o ",
-                     " | ",
-                     "   "),
-                  3:(" o ",
-                     "/| ",
-                     "   "),
-                  4:(" o ",
-                     "/|\\",
-                     "   "),
-                  5:(" o ",
-                     "/|\\",
-                     "/  "),
-                  6:(" o ",
-                     "/|\\",
-                     "/ \\"),}
+   hangman_art = {
+                  0:("    ",
+                     "    ",
+                     "    ",
+                     "    ",
+                     "    "),
+                  1:("_   ",
+                     "    ",
+                     "    ",
+                     "    ",
+                     "    "),
+                  2:("__  ",
+                     "    ",
+                     "    ",
+                     "    ",
+                     "    "),
+                  3:("__  ",
+                     " \  ",
+                     "    ",
+                     "    ",
+                     "    "),
+                  4:("__  ",
+                     " \  ",
+                     "  o ",
+                     "    ",
+                     "    "),
+                  5:("__  ",
+                     " \  ",
+                     "  o ",
+                     "  | ",
+                     "    "),
+                  6:("__  ",
+                     " \  ",
+                     "  o ",
+                     " /| ",
+                     "    "),
+                  7:("__  ",
+                     " \  ",
+                     "  o ",
+                     " /|\\",
+                     "    "),
+                  8:("__  ",
+                     " \  ",
+                     "  o ",
+                     " /|\\",
+                     " /  "),
+                  9:("__  ",
+                     " \  ",
+                     "  o ",
+                     " /|\\",
+                     " / \\"),}
    print("----------------")
    for art in hangman_art[wrong_guess_count]:
       print(art)
@@ -97,7 +128,7 @@ def check_guess(guessed_letters, guess=""):
       return "no_error"
 
 def check_win_condition(wrong_guess_count, hint):
-   if wrong_guess_count == 6:
+   if wrong_guess_count == MAX_WRONG_ANSWERS:
       return "lost"
    elif not "_" in hint:
       return "won"
